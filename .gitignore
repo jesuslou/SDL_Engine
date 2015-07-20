@@ -27,3 +27,7 @@
 *.pdb
 *.ilk
 *_d.exe
+
+lib
+/SDL/SDL2-2.0.3/*.txt
+/SDL/SDL2_image-2.0.0/*.txt
