@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="application">
+      <UniqueIdentifier>{5d4f8606-dbd0-4289-b80d-c85f21c3d6af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utils">
+      <UniqueIdentifier>{3da26043-e079-41da-ac1a-9f4bac376fa8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="render">
+      <UniqueIdentifier>{20044da3-35ba-4669-a77f-3dba8f4f388a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="utils\timer.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="render\image.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="render\renderer.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="render\texture_manager.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="application\application_base.h">
+      <Filter>application</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="utils\timer.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="render\image.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="render\renderer.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="render\texture_manager.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="application\application_base.cpp">
+      <Filter>application</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
