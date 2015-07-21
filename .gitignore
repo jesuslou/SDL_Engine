@@ -28,8 +28,9 @@
 *.ilk
 *_d.exe
 
-lib
 temp
+x64
+lib/SDL_Engine
 
 /SDL/SDL2-2.0.3/*.txt
 /SDL/SDL2_image-2.0.0/*.txt
@@ -49,3 +50,4 @@ temp
 *.rc
 *.cache
 *.idb
+*.suo
