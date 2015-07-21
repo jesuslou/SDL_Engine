@@ -51,3 +51,4 @@ lib/SDL_Engine
 *.cache
 *.idb
 *.suo
+/SDL/SDL2_image-2.0.0/lib/x86/*.txt
