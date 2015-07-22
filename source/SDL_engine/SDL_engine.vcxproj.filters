@@ -10,6 +10,9 @@
     <Filter Include="render">
       <UniqueIdentifier>{20044da3-35ba-4669-a77f-3dba8f4f388a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="audio">
+      <UniqueIdentifier>{93c33fb1-aae2-42f1-b994-58cade0dcb6b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utils\timer.h">
@@ -28,6 +31,9 @@
       <Filter>application</Filter>
     </ClInclude>
     <ClInclude Include="common.h" />
+    <ClInclude Include="audio\audio_manager.h">
+      <Filter>audio</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="utils\timer.cpp">
@@ -46,5 +52,8 @@
       <Filter>application</Filter>
     </ClCompile>
     <ClCompile Include="common.cpp" />
+    <ClCompile Include="audio\audio_manager.cpp">
+      <Filter>audio</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

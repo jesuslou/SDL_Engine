@@ -1,6 +1,7 @@
 #include "common.h"
 #include "application.h"
 #include "render/renderer.h"
+#include "audio/audio_manager.h"
 
 //-----------------
 CApplication & CApplication::get( ) {
@@ -32,6 +33,11 @@ bool CApplication::initProject( ) {
   img_1b.setAlpha( 128 );
   img_1b.setBlendMode( SDL_BlendMode::SDL_BLENDMODE_BLEND );
 
+  CAudioManager::get( ).loadSong( "data/music/beat.wav" );
+  CAudioManager::get( ).playSong( "data/music/beat.wav" );
+
+  CAudioManager::get( ).loadAudio( "data/audio/scratch.wav" );
+
   return true;
 }
 
@@ -40,6 +46,10 @@ void CApplication::updateProject( float elapsed ) {
   double rot = img_1b.getAngle( );
   rot += elapsed * 10.f;
   img_1b.setAngle( rot );
+
+  if( (int)rot % 40 == 0 ) {
+    CAudioManager::get( ).playAudio( "data/audio/scratch.wav" );
+  }
 }
 
 //-----------------

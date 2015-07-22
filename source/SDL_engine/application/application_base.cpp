@@ -4,6 +4,7 @@
 #include <SDL.h>
 #include <stdio.h>
 #include <SDL_image.h>
+#include "audio/audio_manager.h"
 
 //-------------------------
 CApplicationBase::CApplicationBase( ) 
@@ -16,9 +17,13 @@ bool CApplicationBase::init( const char *app_title, unsigned x_res, unsigned y_r
     printf( "CApplicationBase::CRenderer initialization FAILURE!\n" );
     return false;
   } else {
-    printf( "CApplicationBase::CRenderer initialization SUCCESS!\n" );
-    printf( "CApplicationBase::Loading specific project content\n" );
-    return initProject( );
+    is_ok = CAudioManager::get( ).init( );
+    if( !is_ok ) {
+      printf( "CApplicationBase::CAudioManager initialization FAILURE!\n" );
+    } else {
+      printf( "CApplicationBase::Loading specific project content\n" );
+      return initProject( );
+    }
   }
 }
 

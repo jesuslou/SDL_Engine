@@ -60,3 +60,5 @@ lib/SDL_Engine
 *.idb
 *.suo
 /SDL/SDL2_image-2.0.0/lib/x86/*.txt
+/SDL/SDL2_mixer-2.0.0/*.txt
+/SDL/SDL2_mixer-2.0.0/lib/x86/*.txt
