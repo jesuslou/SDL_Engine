@@ -39,14 +39,14 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)..\..\SDL\SDL2-2.0.3\include;$(SolutionDir)..\..\SDL\SDL2_image-2.0.0\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\..\glm;$(SolutionDir)..\..\SDL\SDL2-2.0.3\include;$(SolutionDir)..\..\SDL\SDL2_image-2.0.0\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)..\..\SDL\SDL2_image-2.0.0\lib\x86;$(SolutionDir)..\..\SDL\SDL2-2.0.3\lib\x86;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)..\..\lib\$(ProjectName)\</OutDir>
     <TargetName>$(ProjectName)_d</TargetName>
     <IntDir>$(SolutionDir)..\..\temp\$(ProjectName)_$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(SolutionDir)..\..\SDL\SDL2-2.0.3\include;$(SolutionDir)..\..\SDL\SDL2_image-2.0.0\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)..\..\glm;$(SolutionDir)..\..\SDL\SDL2-2.0.3\include;$(SolutionDir)..\..\SDL\SDL2_image-2.0.0\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)..\..\SDL\SDL2_image-2.0.0\lib\x86;$(SolutionDir)..\..\SDL\SDL2-2.0.3\lib\x86;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)..\..\lib\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)..\..\temp\$(ProjectName)_$(Configuration)\</IntDir>
@@ -57,6 +57,9 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>..;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>common.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)\$(TargetName).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -73,6 +76,9 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>..;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>common.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)\$(TargetName).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -85,6 +91,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="application\application_base.h" />
+    <ClInclude Include="common.h" />
     <ClInclude Include="render\image.h" />
     <ClInclude Include="render\renderer.h" />
     <ClInclude Include="render\texture_manager.h" />
@@ -92,6 +99,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="application\application_base.cpp" />
+    <ClCompile Include="common.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">common.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">common.h</PrecompiledHeaderFile>
+    </ClCompile>
     <ClCompile Include="render\image.cpp" />
     <ClCompile Include="render\renderer.cpp" />
     <ClCompile Include="render\texture_manager.cpp" />

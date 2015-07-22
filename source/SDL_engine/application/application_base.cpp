@@ -1,3 +1,4 @@
+#include "common.h"
 #include "application_base.h"
 #include "render/renderer.h"
 #include <SDL.h>

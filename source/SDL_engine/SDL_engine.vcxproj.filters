@@ -27,6 +27,7 @@
     <ClInclude Include="application\application_base.h">
       <Filter>application</Filter>
     </ClInclude>
+    <ClInclude Include="common.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="utils\timer.cpp">
@@ -44,5 +45,6 @@
     <ClCompile Include="application\application_base.cpp">
       <Filter>application</Filter>
     </ClCompile>
+    <ClCompile Include="common.cpp" />
   </ItemGroup>
 </Project>

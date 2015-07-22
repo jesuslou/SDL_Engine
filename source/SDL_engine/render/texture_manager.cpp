@@ -1,3 +1,4 @@
+#include "common.h"
 #include "texture_manager.h"
 #include "renderer.h"
 #include <SDL.h>

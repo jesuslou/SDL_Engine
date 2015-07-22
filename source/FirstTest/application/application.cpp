@@ -1,3 +1,4 @@
+#include "common.h"
 #include "application.h"
 #include "render/renderer.h"
 
@@ -19,14 +20,14 @@ bool CApplication::initProject( ) {
 
   CRenderer::get( ).setClearColor( SDL_Color( 0, 128, 255, 255 ) );
 
-  img_2.setPosition( SDL_Point( 100, 0 ) );
-  img_1b.setPosition( SDL_Point( 0, 128 ) );
+  img_2.setPosition( TPoint2( 100.f, 0.f ) );
+  img_1b.setPosition( TPoint2( 0.f, 128.f ) );
 
   img_1.setFlipMode( SDL_RendererFlip::SDL_FLIP_HORIZONTAL );
   img_2.setAlpha( 128 );
   img_2.setBlendMode( SDL_BlendMode::SDL_BLENDMODE_ADD );
   img_1b.setScale( 1.5f );
-  img_1b.setPivot(SDL_PointF( 0.5f, 0.5f ) );
+  img_1b.setPivot(TPoint2( 0.5f, 0.5f ) );
   img_1b.setTintColor( SDL_Color( 0, 255, 0, 255 ) );
   img_1b.setAlpha( 128 );
   img_1b.setBlendMode( SDL_BlendMode::SDL_BLENDMODE_BLEND );

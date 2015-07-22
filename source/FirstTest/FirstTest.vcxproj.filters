@@ -5,6 +5,7 @@
     <ClCompile Include="application\application.cpp">
       <Filter>application</Filter>
     </ClCompile>
+    <ClCompile Include="..\SDL_engine\common.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="application">
@@ -15,5 +16,6 @@
     <ClInclude Include="application\application.h">
       <Filter>application</Filter>
     </ClInclude>
+    <ClInclude Include="..\SDL_engine\common.h" />
   </ItemGroup>
 </Project>

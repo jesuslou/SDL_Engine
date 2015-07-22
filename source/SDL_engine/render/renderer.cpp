@@ -1,3 +1,4 @@
+#include "common.h"
 #include "renderer.h"
 #include "texture_manager.h"
 #include <stdio.h>

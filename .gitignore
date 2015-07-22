@@ -28,6 +28,14 @@
 *.ilk
 *_d.exe
 
+*.cmake
+glm/doc/*
+glm/glm/*.txt
+glm/test/*
+glm/util/*
+glm/*.txt
+
+ipch
 temp
 x64
 lib/SDL_Engine

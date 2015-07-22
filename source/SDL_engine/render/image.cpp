@@ -1,3 +1,4 @@
+#include "common.h"
 #include "image.h"
 #include "renderer.h"
 #include "texture_manager.h"
@@ -5,11 +6,11 @@
 //-----------------
 CImage::CImage( ) 
 : m_texture( nullptr )
-, m_position( 0, 0 )
+, m_position( 0.f, 0.f )
 , m_alpha( 255 )
 , m_angle( 0 )
 , m_scale( 1.f )
-, m_pivot( 0, 0 )
+, m_pivot( 0.f, 0.f )
 , m_flip_mode( SDL_FLIP_NONE )
 , m_tint_color( 255, 255, 255, 255 )
 , m_blend_mode( SDL_BLENDMODE_NONE )
@@ -47,8 +48,8 @@ void CImage::destroy( ) {
 void CImage::draw( ) {
   //Set rendering space and render to screen
   SDL_Rect render_quad = { 
-      m_position.x
-    , m_position.y
+      static_cast<int>( m_position.x )
+    , static_cast<int>( m_position.y )
     , static_cast<int>( static_cast<float>( m_width ) * m_scale )
     , static_cast<int>( static_cast<float>( m_height ) * m_scale )
   };
@@ -86,7 +87,7 @@ bool CImage::isValid( ) const {
 }
 
 //-----------------
-void CImage::setPosition( SDL_Point & new_pos ) {
+void CImage::setPosition( TPoint2 & new_pos ) {
   m_position = new_pos;
 }
 
@@ -106,7 +107,7 @@ void CImage::setScale( float new_scale ) {
 }
 
 //-----------------
-void CImage::setPivot( SDL_PointF & new_pivot ) {
+void CImage::setPivot( TPoint2 & new_pivot ) {
   m_pivot = new_pivot;
 }
 

@@ -1,6 +1,7 @@
 /*This source code copyrighted by Lazy Foo' Productions (2004-2015)
 and may not be redistributed without written permission.*/
 
+#include "common.h"
 //Using SDL and standard IO
 #include <SDL.h>
 #include <stdio.h>
@@ -17,6 +18,9 @@ int main( int argc, char* args[ ] ) {
   CApplication::get( ).update( );
 
   CApplication::get( ).destroy( );
+
+  glm::vec2 v;
+  TPoint2 v2;
 
   return 0;
 }

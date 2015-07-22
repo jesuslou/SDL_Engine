@@ -16,11 +16,11 @@ public:
 
   bool isValid( ) const;
 
-  void setPosition( SDL_Point & new_pos );
+  void setPosition( TPoint2 & new_pos );
   void setAlpha( unsigned new_alpha );
   void setAngle( double new_angle );
   void setScale( float new_scale );
-  void setPivot( SDL_PointF & new_pivot );
+  void setPivot( TPoint2 & new_pivot );
   void setFlipMode( SDL_RendererFlip new_flip_mode );
   void setTintColor( SDL_Color & new_color, bool overrides_alpha = false );
   void setBlendMode( SDL_BlendMode new_blend_mode );
@@ -29,7 +29,7 @@ public:
   double getAngle( ) const { return m_angle; }
   float getScale( ) const { return m_scale; }
 
-  SDL_PointF getPivot( ) const { return m_pivot; }
+  TPoint2 getPivot( ) const { return m_pivot; }
   SDL_RendererFlip getFlipMode( ) const { return m_flip_mode; }
   SDL_Color getTintColor( ) const { return m_tint_color; }
   SDL_BlendMode getBlendMode( ) const { return m_blend_mode; }
@@ -42,12 +42,12 @@ public:
 protected:
   SDL_Texture      *m_texture;
 
-  SDL_Point         m_position;
+  TPoint2           m_position;
   unsigned          m_alpha;
   double            m_angle;
   float             m_scale;
 
-  SDL_PointF        m_pivot;
+  TPoint2           m_pivot;
   SDL_RendererFlip  m_flip_mode;
   SDL_Color         m_tint_color;
   SDL_BlendMode     m_blend_mode;
