@@ -5,9 +5,11 @@
 #include <stdio.h>
 #include <SDL_image.h>
 #include "audio/audio_manager.h"
+#include "utils/timer.h"
 
 //-------------------------
 CApplicationBase::CApplicationBase( ) 
+: elapsed( 1.f / 60.f )
 { }
 
 //-------------------------
@@ -41,6 +43,12 @@ void CApplicationBase::update( ) {
 
   //While application is running
   while( !quit ) {
+
+    printf( "elapsed %f\n", elapsed );
+
+    CTimer timer;
+    timer.start( );
+
     //Handle events on queue
     while( SDL_PollEvent( &e ) != 0 ) {
       //User requests quit
@@ -50,11 +58,13 @@ void CApplicationBase::update( ) {
       
     }
 
-    updateProject( 0.033f );
+    updateProject( elapsed );
 
     CRenderer::get( ).beginRender( );
     renderProject( );
     CRenderer::get( ).endRender( );
+
+    elapsed = timer.elapsed( );
   }
 }
 

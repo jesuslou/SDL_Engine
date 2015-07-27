@@ -19,8 +19,5 @@ int main( int argc, char* args[ ] ) {
 
   CApplication::get( ).destroy( );
 
-  glm::vec2 v;
-  TPoint2 v2;
-
   return 0;
 }

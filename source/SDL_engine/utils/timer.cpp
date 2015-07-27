@@ -81,7 +81,7 @@ unsigned CTimer::getTicks( ) {
 }
 
 TTimeStamp CTimer::elapsed( ) {
-  return getTicks( ) / 1000.f;
+  return static_cast<float>( getTicks( ) ) / 1000.f;
 }
 
 bool CTimer::isStarted( ) {

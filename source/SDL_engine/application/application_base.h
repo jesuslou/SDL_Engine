@@ -16,6 +16,8 @@ protected:
   virtual void updateProject( float ) { }
   virtual void renderProject( ) { }
   virtual void destroyProject( ) { }
+  
+  float elapsed;
 };
 
 #endif
