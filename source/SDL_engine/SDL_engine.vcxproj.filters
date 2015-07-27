@@ -16,13 +16,13 @@
     <Filter Include="input">
       <UniqueIdentifier>{bd7df274-30d0-45a2-bdad-a22fc6ac2347}</UniqueIdentifier>
     </Filter>
+    <Filter Include="fonts">
+      <UniqueIdentifier>{e26ff391-84a2-4bf5-83e7-ebdc55cccc52}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utils\timer.h">
       <Filter>utils</Filter>
-    </ClInclude>
-    <ClInclude Include="render\image.h">
-      <Filter>render</Filter>
     </ClInclude>
     <ClInclude Include="render\renderer.h">
       <Filter>render</Filter>
@@ -40,13 +40,19 @@
     <ClInclude Include="input\input_manager.h">
       <Filter>input</Filter>
     </ClInclude>
+    <ClInclude Include="fonts\texture_font.h">
+      <Filter>fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="render\texture.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="fonts\font_manager.h">
+      <Filter>fonts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="utils\timer.cpp">
       <Filter>utils</Filter>
-    </ClCompile>
-    <ClCompile Include="render\image.cpp">
-      <Filter>render</Filter>
     </ClCompile>
     <ClCompile Include="render\renderer.cpp">
       <Filter>render</Filter>
@@ -63,6 +69,15 @@
     </ClCompile>
     <ClCompile Include="input\input_manager.cpp">
       <Filter>input</Filter>
+    </ClCompile>
+    <ClCompile Include="fonts\texture_font.cpp">
+      <Filter>fonts</Filter>
+    </ClCompile>
+    <ClCompile Include="render\texture.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="fonts\font_manager.cpp">
+      <Filter>fonts</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

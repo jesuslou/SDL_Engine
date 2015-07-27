@@ -3,6 +3,7 @@
 #include "render/renderer.h"
 #include "audio/audio_manager.h"
 #include "input/input_manager.h"
+#include "fonts/font_manager.h"
 
 //-----------------
 CApplication & CApplication::get( ) {
@@ -54,6 +55,8 @@ void CApplication::updateProject( float elapsed ) {
       CAudioManager::get( ).playAudio( "data/audio/scratch.wav" );
     }*/
   }
+
+  fonts.printText( CFontManager::FT_GENERAL, "Eh tu, cipote", 20, 200 );
 }
 
 //-----------------

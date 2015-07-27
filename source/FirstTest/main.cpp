@@ -8,8 +8,8 @@ and may not be redistributed without written permission.*/
 #include "application/application.h"
 
 //Screen dimension constants
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+const int SCREEN_WIDTH = 756;
+const int SCREEN_HEIGHT = 1024;
 
 int main( int argc, char* args[ ] ) {
   

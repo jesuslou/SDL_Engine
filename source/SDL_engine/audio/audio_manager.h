@@ -1,7 +1,6 @@
 #ifndef _INC_AUDIO_MANAGER_H_
 #define _INC_AUDIO_MANAGER_H_
 
-#include <string>
 #include <map>
 #include <SDL_mixer.h>
 

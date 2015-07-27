@@ -6,6 +6,7 @@
 #include <SDL_image.h>
 #include "audio/audio_manager.h"
 #include "input/input_manager.h"
+#include "fonts/font_manager.h"
 #include "utils/timer.h"
 
 //-------------------------
@@ -19,15 +20,23 @@ bool CApplicationBase::init( const char *app_title, unsigned x_res, unsigned y_r
   if( !is_ok ) {
     printf( "CApplicationBase::CRenderer initialization FAILURE!\n" );
     return false;
-  } else {
-    is_ok = CAudioManager::get( ).init( );
-    if( !is_ok ) {
-      printf( "CApplicationBase::CAudioManager initialization FAILURE!\n" );
-    } else {
-      printf( "CApplicationBase::Loading specific project content\n" );
-      return initProject( );
-    }
   }
+
+  is_ok = CAudioManager::get( ).init( );
+  if( !is_ok ) {
+    printf( "CApplicationBase::CAudioManager initialization FAILURE!\n" );
+    return false;
+  } 
+
+  is_ok = CFontManager::get( ).init( );
+  if( !is_ok ) {
+    printf( "CApplicationBase::CFontManager initialization FAILURE!\n" );
+    return false;
+  }
+
+  printf( "CApplicationBase::Loading specific project content\n" );
+  return initProject( );
+
 }
 
 //-------------------------
@@ -44,8 +53,6 @@ void CApplicationBase::update( ) {
 
   //While application is running
   while( !quit ) {
-
-    printf( "elapsed %f\n", elapsed );
 
     CTimer timer;
     timer.start( );
@@ -64,6 +71,7 @@ void CApplicationBase::update( ) {
 
     CRenderer::get( ).beginRender( );
     renderProject( );
+    CFontManager::get( ).render( );
     CRenderer::get( ).endRender( );
 
     elapsed = timer.elapsed( );
@@ -76,6 +84,7 @@ void CApplicationBase::destroy( ) {
   // Project specific destruction
   destroyProject( );
 
+  CFontManager::get( ).destroy( );
   CRenderer::get( ).destroy( );
 
 }

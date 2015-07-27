@@ -1,15 +1,15 @@
-#ifndef _INC_IMAGE_H_
-#define _INC_IMAGE_H_
+#ifndef _INC_TEXTURE_H_
+#define _INC_TEXTURE_H_
 
-#include <string>
 #include <SDL.h>
 
-class CImage {
+class CTexture {
 public:
-  CImage( );
-  ~CImage( );
+  CTexture( );
+  ~CTexture( );
 
   bool loadFromFile( std::string path );
+  bool loadFromFileEditable( std::string path );
   void destroy( );
 
   void draw( );
@@ -24,6 +24,7 @@ public:
   void setFlipMode( SDL_RendererFlip new_flip_mode );
   void setTintColor( SDL_Color & new_color, bool overrides_alpha = false );
   void setBlendMode( SDL_BlendMode new_blend_mode );
+  void setClip( SDL_Rect & new_clip );
 
   unsigned getAlpha( ) const { return m_alpha; }
   double getAngle( ) const { return m_angle; }
@@ -33,9 +34,16 @@ public:
   SDL_RendererFlip getFlipMode( ) const { return m_flip_mode; }
   SDL_Color getTintColor( ) const { return m_tint_color; }
   SDL_BlendMode getBlendMode( ) const { return m_blend_mode; }
+  SDL_Rect getClip( ) const { return m_clip; }
+  void* getPixels( ) { return m_pixels; }
+  unsigned getPixel32( unsigned int x, unsigned int y );
+
+  bool lockTexture( );
+  bool unlockTexture( );
 
   unsigned getWidth( ) const { return m_width; }
   unsigned getHeight( ) const { return m_height; }
+  int getPitch( ) const { return m_pitch; }
 
   const std::string & getFilePath( ) const { return m_filepath; }
 
@@ -51,7 +59,11 @@ protected:
   SDL_RendererFlip  m_flip_mode;
   SDL_Color         m_tint_color;
   SDL_BlendMode     m_blend_mode;
+  SDL_Rect          m_clip;
 
+  void             *m_pixels
+    ;
+  int               m_pitch;
   unsigned          m_width;
   unsigned          m_height;
 

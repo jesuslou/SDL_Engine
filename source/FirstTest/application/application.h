@@ -2,7 +2,8 @@
 #define _INC_APPLICATION_H_
 
 #include "application/application_base.h"
-#include "render/image.h"
+#include "render/texture.h"
+#include "fonts/texture_font.h"
 
 class CApplication : public CApplicationBase {
 public:
@@ -11,9 +12,9 @@ public:
 protected:
   CApplication( );
 
-  CImage img_1;
-  CImage img_2;
-  CImage img_1b;
+  CTexture img_1;
+  CTexture img_2;
+  CTexture img_1b;
 
   bool initProject( ) override;
   void updateProject( float ) override;
