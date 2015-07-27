@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <SDL_image.h>
 #include "audio/audio_manager.h"
+#include "input/input_manager.h"
 #include "utils/timer.h"
 
 //-------------------------
@@ -55,8 +56,9 @@ void CApplicationBase::update( ) {
       if( e.type == SDL_QUIT ) {
         quit = true;
       }
-      
     }
+
+    CInputManager::get( ).update( elapsed );
 
     updateProject( elapsed );
 

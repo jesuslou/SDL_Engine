@@ -13,6 +13,9 @@
     <Filter Include="audio">
       <UniqueIdentifier>{93c33fb1-aae2-42f1-b994-58cade0dcb6b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="input">
+      <UniqueIdentifier>{bd7df274-30d0-45a2-bdad-a22fc6ac2347}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utils\timer.h">
@@ -34,6 +37,9 @@
     <ClInclude Include="audio\audio_manager.h">
       <Filter>audio</Filter>
     </ClInclude>
+    <ClInclude Include="input\input_manager.h">
+      <Filter>input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="utils\timer.cpp">
@@ -54,6 +60,9 @@
     <ClCompile Include="common.cpp" />
     <ClCompile Include="audio\audio_manager.cpp">
       <Filter>audio</Filter>
+    </ClCompile>
+    <ClCompile Include="input\input_manager.cpp">
+      <Filter>input</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
