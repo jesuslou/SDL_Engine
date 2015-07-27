@@ -169,16 +169,16 @@ void CTextureFont::renderText( int x, int y, std::string text, float scale ) {
   int curX = x, curY = y;
 
   //Go through the text
-  for( int i = 0; i < text.length( ); ++i ) {
+  for( unsigned i = 0; i < text.length( ); ++i ) {
     //If the current character is a space
     if( text[ i ] == ' ' ) {
       //Move over
-      curX += m_space * scale;
+      curX += static_cast< int >( static_cast< int >( m_space ) * scale );
     }
     //If the current character is a newline
     else if( text[ i ] == '\n' ) {
       //Move down
-      curY += m_new_line * scale;
+      curY += static_cast<int>(static_cast<int>( m_new_line ) * scale );
 
       //Move back
       curX = x;
@@ -188,14 +188,15 @@ void CTextureFont::renderText( int x, int y, std::string text, float scale ) {
 
       m_texture.setPosition( TPoint2( curX, curY ) );
       SDL_Rect rect = m_chars[ ascii ];
-      rect.w *= scale;
-      rect.h *= scale;
+
+      rect.w = static_cast< int >( static_cast< int >( rect.w ) * scale );
+      rect.h = static_cast< int >( static_cast< int >( rect.h ) * scale );
       m_texture.setClip( m_chars[ ascii ] );
       //Show the character
       m_texture.draw( );
 
       //Move over the width of the character with one pixel of padding
-      curX += m_chars[ ascii ].w * scale + 1;
+      curX += static_cast< int >( static_cast< int >( m_chars[ ascii ].w ) * scale ) + 1;
     }
   }
 }

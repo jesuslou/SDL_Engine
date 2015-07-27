@@ -21,28 +21,28 @@ void CInputManager::update( float ) {
 
 //-------------------------
 bool CInputManager::isPressed( EKeys key ) {
-  return m_cur_key_states[ key ];
+  return m_cur_key_states[ key ] != 0;
 }
 
 //-------------------------
 bool CInputManager::becomesPressed( EKeys key ) {
   if( m_old_key_states ) {
-    return !m_old_key_states[ key ] && m_cur_key_states[ key ];
+    return m_old_key_states[ key ] == 0 && m_cur_key_states[ key ] != 0;
   } else {
-    return m_cur_key_states[ key ];
+    return m_cur_key_states[ key ] != 0;
   }
 }
 
 //-------------------------
 bool CInputManager::isReleased( EKeys key ) {
-  return !m_cur_key_states[ key ];
+  return m_cur_key_states[ key ] == 0;
 }
 
 //-------------------------
 bool CInputManager::becomesReleased( EKeys key ) {
   if( m_old_key_states ) {
-    return m_old_key_states[ key ] && !m_cur_key_states[ key ];
+    return m_old_key_states[ key ] != 0 && !m_cur_key_states[ key ] == 0;
   } else {
-    return !m_cur_key_states[ key ];
+    return m_cur_key_states[ key ] == 0;
   }
 }

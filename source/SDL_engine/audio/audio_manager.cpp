@@ -17,6 +17,7 @@ bool CAudioManager::init( ) {
     return false;
   }
   printf( "CAudioManager::SDL Mixer initialization SUCCESS!\n" );
+  return true;
 }
 
 //-----------------

@@ -62,3 +62,5 @@ lib/SDL_Engine
 /SDL/SDL2_image-2.0.0/lib/x86/*.txt
 /SDL/SDL2_mixer-2.0.0/*.txt
 /SDL/SDL2_mixer-2.0.0/lib/x86/*.txt
+/SDL/SDL2_ttf-2.0.12/lib/x86/*.txt
+/SDL/SDL2_ttf-2.0.12/*.txt

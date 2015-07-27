@@ -4,6 +4,9 @@
     <Filter Include="application">
       <UniqueIdentifier>{a3761c3d-eedd-4dc9-8031-c33b2937df01}</UniqueIdentifier>
     </Filter>
+    <Filter Include="logic">
+      <UniqueIdentifier>{247c00d4-44b1-4c97-bd83-df33e05bea92}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="application\application.cpp">
