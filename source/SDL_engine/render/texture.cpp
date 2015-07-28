@@ -14,11 +14,35 @@ CTexture::CTexture( )
 , m_flip_mode( SDL_FLIP_NONE )
 , m_tint_color( 255, 255, 255, 255 )
 , m_blend_mode( SDL_BLENDMODE_NONE )
+, m_clip( )
 , m_pixels( nullptr )
 , m_pitch( 0 )
 , m_width( 0 )
 , m_height( 0 )
 { }
+
+//-----------------
+CTexture::CTexture( const CTexture & rhs ) 
+: m_position( rhs.m_position )
+, m_alpha( rhs.m_alpha )
+, m_angle( rhs.m_angle )
+, m_scale( rhs.m_scale )
+, m_pivot( rhs.m_pivot )
+, m_flip_mode( rhs.m_flip_mode )
+, m_tint_color( rhs.m_tint_color )
+, m_blend_mode( rhs.m_blend_mode )
+, m_clip( rhs.m_clip )
+, m_pixels( nullptr )
+, m_pitch( 0 )
+, m_width( rhs.m_width )
+, m_height( rhs.m_height )
+, m_filepath( rhs.m_filepath )
+{ 
+  if( !m_filepath.empty( ) ) {
+    m_texture = CTextureManager::get( ).getTexture( m_filepath.c_str( ) );
+  }
+}
+
 
 //-----------------
 CTexture::~CTexture( ) {
@@ -27,7 +51,7 @@ CTexture::~CTexture( ) {
 
 
 //-----------------
-bool CTexture::loadFromFile( std::string path ) {
+bool CTexture::loadFromFile( const char* path ) {
 
   destroy( );
 
@@ -43,7 +67,7 @@ bool CTexture::loadFromFile( std::string path ) {
 }
 
 //-----------------
-bool CTexture::loadFromFileEditable( std::string path ) {
+bool CTexture::loadFromFileEditable( const char* path ) {
 
   destroy( );
 
@@ -62,7 +86,7 @@ bool CTexture::loadFromFileEditable( std::string path ) {
 //-----------------
 void CTexture::destroy( ) {
   if( m_texture ) {
-    CTextureManager::get( ).releaseTexture( m_filepath );
+    CTextureManager::get( ).releaseTexture( m_filepath.c_str( ) );
     m_texture = nullptr;
     m_width = 0;
     m_height = 0;
@@ -70,7 +94,7 @@ void CTexture::destroy( ) {
 }
 
 //-----------------
-void CTexture::draw( ) {
+void CTexture::render( ) {
   //Set rendering space and render to screen
   SDL_Rect render_quad = { 
       static_cast<int>( m_position.x )
@@ -116,7 +140,7 @@ bool CTexture::isValid( ) const {
 }
 
 //-----------------
-void CTexture::setPosition( TPoint2 & new_pos ) {
+void CTexture::setPosition( const TPoint2 & new_pos ) {
   m_position = new_pos;
 }
 
@@ -136,7 +160,7 @@ void CTexture::setScale( float new_scale ) {
 }
 
 //-----------------
-void CTexture::setPivot( TPoint2 & new_pivot ) {
+void CTexture::setPivot( const TPoint2 & new_pivot ) {
   m_pivot = new_pivot;
 }
 

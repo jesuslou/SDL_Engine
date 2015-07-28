@@ -31,7 +31,7 @@ void CTextureManager::destroy( ) {
 }
 
 //-----------------
-SDL_Texture* CTextureManager::loadTexture( std::string & path, unsigned *width, unsigned *height ) {
+SDL_Texture* CTextureManager::loadTexture( const char* path, unsigned *width, unsigned *height ) {
   //The final texture
   TTextureRef *tex_ref = getTextureRef( path );
   if( tex_ref ) {
@@ -46,9 +46,9 @@ SDL_Texture* CTextureManager::loadTexture( std::string & path, unsigned *width, 
   SDL_Texture *new_texture = nullptr;
 
   //Load image at specified path
-  SDL_Surface* loaded_surface = IMG_Load( path.c_str( ) );
+  SDL_Surface* loaded_surface = IMG_Load( path );
   if( loaded_surface == nullptr ) {
-    printf( "Unable to load image %s! SDL_image Error: %s\n", path.c_str( ), IMG_GetError( ) );
+    printf( "Unable to load image %s! SDL_image Error: %s\n", path, IMG_GetError( ) );
   } else {
     //Color key image
     SDL_SetColorKey( loaded_surface, SDL_TRUE, SDL_MapRGB( loaded_surface->format, 0, 0xFF, 0xFF ) );
@@ -56,7 +56,7 @@ SDL_Texture* CTextureManager::loadTexture( std::string & path, unsigned *width, 
     //Create texture from surface pixels
     new_texture = SDL_CreateTextureFromSurface( CRenderer::get( ).getRenderer( ), loaded_surface );
     if( new_texture == nullptr ) {
-      printf( "Unable to create texture from %s! SDL Error: %s\n", path.c_str( ), SDL_GetError( ) );
+      printf( "Unable to create texture from %s! SDL Error: %s\n", path, SDL_GetError( ) );
     } else {
       //Get image dimensions
       if( width ) {
@@ -77,7 +77,7 @@ SDL_Texture* CTextureManager::loadTexture( std::string & path, unsigned *width, 
 }
 
 //-----------------
-SDL_Texture* CTextureManager::loadEditableTexture( std::string & path, unsigned *width, unsigned *height, int *pitch ) {
+SDL_Texture* CTextureManager::loadEditableTexture( const char* path, unsigned *width, unsigned *height, int *pitch ) {
   //The final texture
   TTextureRef *tex_ref = getTextureRef( path );
   if( tex_ref ) {
@@ -95,9 +95,9 @@ SDL_Texture* CTextureManager::loadEditableTexture( std::string & path, unsigned 
   SDL_Texture *new_texture = nullptr;
 
   //Load image at specified path
-  SDL_Surface* loaded_surface = IMG_Load( path.c_str( ) );
+  SDL_Surface* loaded_surface = IMG_Load( path );
   if( loaded_surface == nullptr ) {
-    printf( "CTextureManager::Unable to load image %s! SDL_image Error: %s\n", path.c_str( ), IMG_GetError( ) );
+    printf( "CTextureManager::Unable to load image %s! SDL_image Error: %s\n", path, IMG_GetError( ) );
   } else {
 
     SDL_Surface* formatted_surface = SDL_ConvertSurfaceFormat( loaded_surface, SDL_PIXELFORMAT_RGBA8888, NULL );
@@ -140,7 +140,7 @@ SDL_Texture* CTextureManager::loadEditableTexture( std::string & path, unsigned 
 }
 
 //-----------------
-SDL_Texture* CTextureManager::getTexture( std::string & path ) {
+SDL_Texture* CTextureManager::getTexture( const char* path ) {
   auto it = m_textures.find( path );
   if( it != m_textures.end( ) ) {
     ++it->second.m_nrefs;
@@ -150,7 +150,7 @@ SDL_Texture* CTextureManager::getTexture( std::string & path ) {
 }
 
 //-----------------
-CTextureManager::TTextureRef * CTextureManager::getTextureRef( std::string & path ) {
+CTextureManager::TTextureRef * CTextureManager::getTextureRef( const char* path ) {
   auto it = m_textures.find( path );
   if( it != m_textures.end( ) ) {
     ++it->second.m_nrefs;
@@ -160,7 +160,7 @@ CTextureManager::TTextureRef * CTextureManager::getTextureRef( std::string & pat
 }
 
 //-----------------
-bool CTextureManager::releaseTexture( std::string & path ) {
+bool CTextureManager::releaseTexture( const char* path ) {
   auto it = m_textures.find( path );
   if( it != m_textures.end( ) ) {
     --it->second.m_nrefs;

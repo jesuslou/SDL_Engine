@@ -9,13 +9,13 @@ CTextureFont::CTextureFont( )
 { }
 
 //-----------------
-CTextureFont::CTextureFont( std::string path ) {
+CTextureFont::CTextureFont( const char* path ) {
   buildFont( path );
 }
 
 
 //-----------------
-bool CTextureFont::buildFont( std::string path ) {
+bool CTextureFont::buildFont( const char* path ) {
   m_texture.loadFromFileEditable( path );
 
   if( !m_texture.lockTexture( ) ) {
@@ -193,7 +193,7 @@ void CTextureFont::renderText( int x, int y, std::string text, float scale ) {
       rect.h = static_cast< int >( static_cast< int >( rect.h ) * scale );
       m_texture.setClip( m_chars[ ascii ] );
       //Show the character
-      m_texture.draw( );
+      m_texture.render( );
 
       //Move over the width of the character with one pixel of padding
       curX += static_cast< int >( static_cast< int >( m_chars[ ascii ].w ) * scale ) + 1;

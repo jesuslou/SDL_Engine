@@ -99,11 +99,20 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">common.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="application\application.cpp" />
+    <ClCompile Include="logic\board.cpp" />
+    <ClCompile Include="logic\bullet_storage.cpp" />
+    <ClCompile Include="logic\gameplay.cpp" />
+    <ClCompile Include="logic\target_cursor.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\SDL_engine\common.h" />
     <ClInclude Include="application\application.h" />
+    <ClInclude Include="logic\board.h" />
+    <ClInclude Include="logic\bullet_storage.h" />
+    <ClInclude Include="logic\gameplay.h" />
+    <ClInclude Include="logic\control_keys_data.h" />
+    <ClInclude Include="logic\target_cursor.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SDL_engine\SDL_engine.vcxproj">

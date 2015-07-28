@@ -9,10 +9,10 @@ class CTexture;
 class CTextureFont {
 public:
   CTextureFont( );
-  CTextureFont( std::string path );
+  CTextureFont( const char* path );
 
   //Generates the font
-  bool buildFont( std::string path );
+  bool buildFont( const char* path );
 
   //Shows the text
   void renderText( int x, int y, std::string text, float scale = 1.f );

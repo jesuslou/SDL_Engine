@@ -4,6 +4,7 @@
 #include "application/application_base.h"
 #include "render/texture.h"
 #include "fonts/texture_font.h"
+#include "logic/board.h"
 
 class CApplication : public CApplicationBase {
 public:
@@ -11,10 +12,6 @@ public:
 
 protected:
   CApplication( );
-
-  CTexture img_1;
-  CTexture img_2;
-  CTexture img_1b;
 
   bool initProject( ) override;
   void updateProject( float ) override;

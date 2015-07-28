@@ -15,12 +15,12 @@ public:
   bool init( );
   void destroy( );
 
-  SDL_Texture* loadTexture( std::string & path, unsigned *width, unsigned *height );
-  SDL_Texture* loadEditableTexture( std::string & path, unsigned *width, unsigned *height, int *pitch );
-  SDL_Texture* getTexture( std::string & path );
-  TTextureRef* getTextureRef( std::string & path );
+  SDL_Texture* loadTexture( const char* path, unsigned *width, unsigned *height );
+  SDL_Texture* loadEditableTexture( const char* path, unsigned *width, unsigned *height, int *pitch );
+  SDL_Texture* getTexture( const char* path );
+  TTextureRef* getTextureRef( const char* path );
 
-  bool releaseTexture( std::string & path );
+  bool releaseTexture( const char* path );
 
 private:
   CTextureManager( );

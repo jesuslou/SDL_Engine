@@ -3,6 +3,7 @@
 #include "render/renderer.h"
 #include <SDL.h>
 #include <stdio.h>
+#include <time.h>
 #include <SDL_image.h>
 #include "audio/audio_manager.h"
 #include "input/input_manager.h"
@@ -16,6 +17,9 @@ CApplicationBase::CApplicationBase( )
 
 //-------------------------
 bool CApplicationBase::init( const char *app_title, unsigned x_res, unsigned y_res ) {
+
+  srand( time( NULL ) );
+
   bool is_ok = CRenderer::get( ).init( app_title, x_res, y_res );
   if( !is_ok ) {
     printf( "CApplicationBase::CRenderer initialization FAILURE!\n" );

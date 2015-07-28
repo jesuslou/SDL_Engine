@@ -14,11 +14,38 @@
     </ClCompile>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="..\SDL_engine\common.cpp" />
+    <ClCompile Include="logic\board.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\target_cursor.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\gameplay.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\bullet_storage.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application\application.h">
       <Filter>application</Filter>
     </ClInclude>
     <ClInclude Include="..\SDL_engine\common.h" />
+    <ClInclude Include="logic\board.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\target_cursor.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\gameplay.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\control_keys_data.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\bullet_storage.h">
+      <Filter>logic</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

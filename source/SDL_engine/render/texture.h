@@ -6,21 +6,22 @@
 class CTexture {
 public:
   CTexture( );
+  CTexture( const CTexture &rhs );
   ~CTexture( );
 
-  bool loadFromFile( std::string path );
-  bool loadFromFileEditable( std::string path );
+  bool loadFromFile( const char* path );
+  bool loadFromFileEditable( const char* path );
   void destroy( );
 
-  void draw( );
+  void render( );
 
   bool isValid( ) const;
 
-  void setPosition( TPoint2 & new_pos );
+  void setPosition( const TPoint2 & new_pos );
   void setAlpha( unsigned new_alpha );
   void setAngle( double new_angle );
   void setScale( float new_scale );
-  void setPivot( TPoint2 & new_pivot );
+  void setPivot( const TPoint2 & new_pivot );
   void setFlipMode( SDL_RendererFlip new_flip_mode );
   void setTintColor( SDL_Color & new_color, bool overrides_alpha = false );
   void setBlendMode( SDL_BlendMode new_blend_mode );
@@ -45,7 +46,7 @@ public:
   unsigned getHeight( ) const { return m_height; }
   int getPitch( ) const { return m_pitch; }
 
-  const std::string & getFilePath( ) const { return m_filepath; }
+  const char* getFilePath( ) const { return m_filepath.c_str( ); }
 
 protected:
   SDL_Texture      *m_texture;
