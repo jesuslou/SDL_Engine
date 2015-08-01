@@ -6,8 +6,6 @@
 CBoard::CBoard( ) 
 : m_render_offset( 0.f, 0.f )
 , m_partner_board( nullptr )
-, m_time_to_can_shoot( 0.f )
-, m_time_between_shoots( 0.5f )
 { }
 
 //-------------------------
@@ -29,6 +27,10 @@ bool CBoard::init( int _cells_x, int _cells_y, const char* img_path, const TPoin
       cell_pos += m_render_offset;
       img.setPosition( cell_pos );
       img.setBlendMode( SDL_BlendMode::SDL_BLENDMODE_BLEND );
+      CTexture & dbg_img = cell.debug_texture;
+      dbg_img.loadFromFile( "data/textures/bullet.png" );
+      dbg_img.setPosition( cell_pos );
+      dbg_img.setBlendMode( SDL_BlendMode::SDL_BLENDMODE_BLEND );
       m_board.push_back( cell );
     }
   }
@@ -37,6 +39,7 @@ bool CBoard::init( int _cells_x, int _cells_y, const char* img_path, const TPoin
   m_target_cursor.setControlKeys( ct_keys );
 
   m_bullets.init( max_bullets, bullets_offset );
+
   return true;
 }
 
@@ -44,7 +47,14 @@ bool CBoard::init( int _cells_x, int _cells_y, const char* img_path, const TPoin
 void CBoard::destroy( ) {
   for( auto & cell : m_board ) {
     cell.texture.destroy( );
+    cell.debug_texture.destroy( );
   }
+
+  for( auto & enemy : m_enemies ) {
+    enemy->destroy( );
+    delete enemy;
+  }
+  m_enemies.clear( );
 
   m_target_cursor.destroy( );
   m_bullets.destroy( );
@@ -55,13 +65,10 @@ void CBoard::destroy( ) {
 void CBoard::update( float elapsed ) {
   m_target_cursor.update( elapsed );
 
-  m_time_to_can_shoot -= elapsed;
-  if( CInputManager::get( ).isPressed( m_keys.key_shoot ) && m_time_to_can_shoot <= 0.f && m_bullets.canShoot( ) ) {
-    onShoot( );
-    if( m_partner_board ) {
-      m_partner_board->onShoot( );
-    }
+  for( auto & enemy : m_enemies ) {
+    enemy->update( elapsed );
   }
+  updateEnemiesInCells( );
 
 }
 
@@ -69,6 +76,12 @@ void CBoard::update( float elapsed ) {
 void CBoard::render( ) {
   for( auto & cell : m_board ) {
     cell.texture.render( );
+    if( cell.has_enemy )
+      cell.debug_texture.render( );
+  }
+
+  for( auto & enemy : m_enemies ) {
+    enemy->render( );
   }
 
   m_target_cursor.render( );
@@ -76,22 +89,90 @@ void CBoard::render( ) {
 }
 
 //-------------------------
-void CBoard::onShoot( ) {
-  m_time_to_can_shoot = m_time_between_shoots;
+bool CBoard::canShoot( ) const {
+  return m_bullets.canShoot( );
+}
+
+//-------------------------
+int CBoard::onShoot( ) {
   m_bullets.addBullets( -1 );
   TPoint2 cursor_pos = m_target_cursor.getBoardPos( );
-  TCell & cell = getCell( cursor_pos );
-  if( m_partner_board &&  cell.has_enemy ) {
+  TCell * cell = getCell( cursor_pos );
+  if( m_partner_board &&  cell->has_enemy ) {
     m_partner_board->m_bullets.addBullets( 1 );
+    destroyEnemy( cursor_pos );
+    return 1;
+  }
+  return 0;
+}
+
+//-------------------------
+void CBoard::addEnemy( CEnemy *enemy ) {
+  m_enemies.push_back( enemy );
+}
+
+//-------------------------
+CBoard::TCell * CBoard::getCell( TPoint2 pos ) {
+  for( auto & cell : m_board ) {
+    if( cell.x == pos.x && cell.y == pos.y ) {
+      return &cell;
+    }
+  }
+  return nullptr;
+}
+
+//-------------------------
+CEnemy * CBoard::getEnemy( TPoint2 pos ) {
+  for( auto & enemy : m_enemies ) {
+    if( enemy->getBoardPos( ) == pos ) {
+      return enemy;
+    }
+  }
+  return nullptr;
+}
+
+//-------------------------
+CBoard::VEnemies::iterator CBoard::getEnemyIterator( TPoint2 pos ) {
+  VEnemies::iterator it;
+  for( it = m_enemies.begin( ); it != m_enemies.end( ); ++it ) {
+    if( ( *it )->getBoardPos( ) == pos ) {
+      return it;
+    }
+  }
+  return m_enemies.end( );
+}
+
+
+//-------------------------
+void CBoard::updateEnemiesInCells( ) {
+  for( auto & cell : m_board ) {
+    cell.has_enemy = false;
+  }
+
+  std::vector<TPoint2> enemies_to_destroy;
+  for( auto & enemy : m_enemies ) {
+    TPoint2 enemy_pos = enemy->getBoardPos( );
+    TCell *cell = getCell( enemy_pos );
+    if( cell ) {
+      cell->has_enemy = true;
+    }
+
+    if( enemy_pos.y > 5 ) {
+      enemies_to_destroy.push_back( enemy_pos );
+    }
+  }
+
+  for( auto & pos : enemies_to_destroy ) {
+    destroyEnemy( pos );
   }
 }
 
 //-------------------------
-CBoard::TCell & CBoard::getCell( TPoint2 pos ) {
-  for( auto & cell : m_board ) {
-    if( cell.x == pos.x && cell.y == pos.y ) {
-      return cell;
-    }
+void CBoard::destroyEnemy( TPoint2 pos ) {
+  VEnemies::iterator enemy = getEnemyIterator( pos );
+  if( enemy != m_enemies.end( ) ) {
+    ( *enemy )->destroy( );
+    delete ( *enemy );
   }
+  m_enemies.erase( enemy );
 }
-

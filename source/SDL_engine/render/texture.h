@@ -26,6 +26,8 @@ public:
   void setTintColor( SDL_Color & new_color, bool overrides_alpha = false );
   void setBlendMode( SDL_BlendMode new_blend_mode );
   void setClip( SDL_Rect & new_clip );
+  void setWidth( unsigned w ) { m_width = w; }
+  void setHeight( unsigned h ) { m_height = h; }
 
   unsigned getAlpha( ) const { return m_alpha; }
   double getAngle( ) const { return m_angle; }

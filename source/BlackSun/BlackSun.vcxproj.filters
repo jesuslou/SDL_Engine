@@ -7,6 +7,9 @@
     <Filter Include="logic">
       <UniqueIdentifier>{247c00d4-44b1-4c97-bd83-df33e05bea92}</UniqueIdentifier>
     </Filter>
+    <Filter Include="logic\enemies">
+      <UniqueIdentifier>{8c1ab8a1-866a-4a8c-8a99-a77676ebc66d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="application\application.cpp">
@@ -25,6 +28,18 @@
     </ClCompile>
     <ClCompile Include="logic\bullet_storage.cpp">
       <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\enemies\enemy.cpp">
+      <Filter>logic\enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\enemies\enemy_basic.cpp">
+      <Filter>logic\enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\barrier.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\enemies\enemy_generator.cpp">
+      <Filter>logic\enemies</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -46,6 +61,18 @@
     </ClInclude>
     <ClInclude Include="logic\bullet_storage.h">
       <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\enemies\enemy.h">
+      <Filter>logic\enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\enemies\enemy_basic.h">
+      <Filter>logic\enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\barrier.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\enemies\enemy_generator.h">
+      <Filter>logic\enemies</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
