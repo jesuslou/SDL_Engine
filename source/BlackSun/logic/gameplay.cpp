@@ -109,7 +109,7 @@ void CGameplay::reset( ) {
 
 //-----------------
 void CGameplay::onBarrierReached( ) {
-  bool finish = false;// m_barrier.addLife( -1 );
+  bool finish = m_barrier.addLife( -1 );
   if( finish ) {
     setGameState( GS_LOSE );
   }
