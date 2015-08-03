@@ -28,6 +28,8 @@ public:
 
   void render( );
 
+  void reset( );
+
   bool canShoot( ) const;
   int onShoot( );
 

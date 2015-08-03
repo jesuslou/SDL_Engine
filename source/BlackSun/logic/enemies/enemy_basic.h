@@ -6,7 +6,7 @@
 class CEnemyBasic : public CEnemy {
 public:
   CEnemyBasic( );
-  CEnemyBasic( const char *img_path, const TPoint2 & board_pos, CBoard *board );
+  CEnemyBasic( const char *img_path, const TPoint2 & board_pos, CBoard *board, float speed );
 
   //virtual bool init( const char *img_path, const TPoint2 & render_offset, const TPoint2 & board_pos ) override;
   //virtual void destroy( ) override;

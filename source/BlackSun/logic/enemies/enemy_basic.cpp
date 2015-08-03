@@ -9,9 +9,9 @@ CEnemyBasic::CEnemyBasic( )
 { }
 
 //-----------------
-CEnemyBasic::CEnemyBasic( const char *img_path, const TPoint2 & board_pos, CBoard *board )
+CEnemyBasic::CEnemyBasic( const char *img_path, const TPoint2 & board_pos, CBoard *board, float speed )
 : m_acc_elaspsed( 0.f )
-, m_time_between_moves( 0.7 )
+, m_time_between_moves( speed )
 {
   init( img_path, board->getRenderOffset( ), board_pos, board );
 }

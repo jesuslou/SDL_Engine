@@ -12,6 +12,8 @@ public:
   
   void update( float elapsedd );
 
+  void reset( );
+
   void spawnEnemies( );
 
 private:

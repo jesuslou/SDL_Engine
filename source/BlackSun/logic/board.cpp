@@ -89,6 +89,22 @@ void CBoard::render( ) {
 }
 
 //-------------------------
+void CBoard::reset( ) {
+  for( auto & cell : m_board ) {
+    cell.has_enemy = false;
+  }
+  for( auto & enemy : m_enemies ) {
+    enemy->destroy( );
+    delete enemy;
+  }
+  m_enemies.clear( );
+
+  m_target_cursor.setBoardPos( TPoint2( rand( ) % m_cells_x, rand( ) % m_cells_y ) );
+
+}
+
+
+//-------------------------
 bool CBoard::canShoot( ) const {
   return m_bullets.canShoot( );
 }

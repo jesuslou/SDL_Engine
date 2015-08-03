@@ -13,7 +13,9 @@ public:
   void update( float elapsed );
   void render( );
 
-  void addLife( unsigned amount );
+  void reset( );
+
+  bool addLife( unsigned amount );
 
 private:
   CTexture          m_texture;

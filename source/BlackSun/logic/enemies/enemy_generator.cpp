@@ -17,6 +17,9 @@ bool CEnemyGenerator::init( CBoard *board_p1, CBoard *board_p2, float time_betwe
   m_board_p1 = board_p1;
   m_board_p2 = board_p2;
   m_time_between_enemies = time_between_enemies;
+
+  reset( );
+
   return true;
 }
 
@@ -35,7 +38,15 @@ void CEnemyGenerator::update( float elapsed ) {
 }
 
 //-----------------
+void CEnemyGenerator::reset( ) {
+  m_global_acc_time = 0.f;
+  m_time = 0.f;
+}
+
+//-----------------
 void CEnemyGenerator::spawnEnemies( ) {
-  m_board_p1->addEnemy( new CEnemyBasic( "data/textures/enemy_01.png", TPoint2( rand( ) % 4, 0 ), m_board_p1 ) );
-  m_board_p2->addEnemy( new CEnemyBasic( "data/textures/enemy_01.png", TPoint2( rand( ) % 4, 0 ), m_board_p2 ) );
+  float base_speed = 0.7;
+  base_speed *= ( 1.f - ( m_global_acc_time / 60.f ) );
+  m_board_p1->addEnemy( new CEnemyBasic( "data/textures/enemy_01.png", TPoint2( rand( ) % 4, 0 ), m_board_p1, base_speed ) );
+  m_board_p2->addEnemy( new CEnemyBasic( "data/textures/enemy_01.png", TPoint2( rand( ) % 4, 0 ), m_board_p2, base_speed ) );
 }

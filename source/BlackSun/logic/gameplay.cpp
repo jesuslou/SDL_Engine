@@ -1,5 +1,6 @@
 #include "common.h"
 #include "gameplay.h"
+#include "fonts/font_manager.h"
 
 const int CGameplay::CELLS_X = 4;
 const int CGameplay::CELLS_Y = 6;
@@ -15,6 +16,8 @@ CGameplay & CGameplay::get( ) {
 CGameplay::CGameplay( ) 
 : m_time_to_can_shoot( 0.f )
 , m_time_between_shoots( 0.5f )
+, m_game_state( GS_GAME )
+, m_points( 0 )
 {
 }
 
@@ -26,6 +29,9 @@ bool CGameplay::init( ) {
   
   m_separator.loadFromFile( "data/textures/bullet_storage.png" );
   m_separator.setPosition( TPoint2( 75 + 400, maring_up ) );
+
+  m_popup.loadFromFile( "data/textures/popup_bg.png" );
+  m_popup.setPosition( TPoint2( 275, 178 ) );
 
   m_barrier.init( TPoint2( 0, 78 + 600 ), TPoint2( 1024, 78 ) );
 
@@ -39,32 +45,43 @@ void CGameplay::destroy( ) {
   m_board_p2.destroy( );
   m_separator.destroy( );
   m_barrier.destroy( );
+  m_popup.destroy( );
   m_enemy_generator.destroy( );
 }
 
 //-----------------
 void CGameplay::update( float elapsed ) {
 
-  m_enemy_generator.update( elapsed );
+  if( m_game_state == GS_GAME ) {
+    m_enemy_generator.update( elapsed );
 
-  m_board_p1.update( elapsed );
-  m_board_p2.update( elapsed );
+    m_board_p1.update( elapsed );
+    m_board_p2.update( elapsed );
 
-  m_time_to_can_shoot -= elapsed;
-  if( CInputManager::get( ).isPressed( VK_SPACE ) && m_time_to_can_shoot <= 0.f ) {
-    m_time_to_can_shoot = m_time_between_shoots;
+    m_time_to_can_shoot -= elapsed;
+    if( CInputManager::get( ).isPressed( VK_SPACE ) && m_time_to_can_shoot <= 0.f ) {
+      m_time_to_can_shoot = m_time_between_shoots;
 
-    int points = 0;
-    if( m_board_p1.canShoot( ) ) {
-      points = m_board_p1.onShoot( );
+      int points = 0;
+      if( m_board_p1.canShoot( ) ) {
+        points += m_board_p1.onShoot( );
+      }
+      if( m_board_p2.canShoot( ) ) {
+        points += m_board_p2.onShoot( );
+      }
+      m_points += points;
+      //addPoints( points );
     }
-    if( m_board_p2.canShoot( ) ) {
-      points = m_board_p2.onShoot( );
+
+    m_barrier.update( elapsed );
+  } else if( m_game_state == GS_LOSE ) {
+    fonts.printText( CFontManager::FT_GENERAL, "YOU LOSE", 275, 178 );
+    fonts.printText( CFontManager::FT_GENERAL, std::to_string( m_points ), 275, 228 );
+    if( CInputManager::get( ).isPressed( VK_ENTER ) ) {
+      reset( );
     }
-    //addPoints( points );
   }
-
-  m_barrier.update( elapsed );
+  fonts.printText( CFontManager::FT_GENERAL, std::to_string( m_points ), 475, 0 );
 }
 
 //-----------------
@@ -73,10 +90,31 @@ void CGameplay::render( ) {
   m_board_p2.render( );
   m_separator.render( );
   m_barrier.render( );
+
+  if( m_game_state == GS_LOSE ) {
+    m_popup.render( );
+  }
 }
 
+//-----------------
+void CGameplay::reset( ) {
+  m_board_p1.reset( );
+  m_board_p2.reset( );
+  m_barrier.reset( );
+  m_enemy_generator.reset( );
+  m_points = 0;
+  setGameState( GS_GAME );
+}
 
 //-----------------
 void CGameplay::onBarrierReached( ) {
-  m_barrier.addLife( -1 );
+  bool finish = m_barrier.addLife( -1 );
+  if( finish ) {
+    setGameState( GS_LOSE );
+  }
+}
+
+//-----------------
+void CGameplay::setGameState( EGameState new_state ) {
+  m_game_state = new_state;
 }

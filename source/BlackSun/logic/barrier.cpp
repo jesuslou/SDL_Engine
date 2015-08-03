@@ -12,11 +12,12 @@ bool CBarrier::init( const TPoint2 & pos, const TPoint2 & size ) {
   m_texture.setPosition( pos );
   m_texture.setClip( SDL_Rect( 0, 0, size.x, size.y ) );
 
-  m_cur_lives = MAX_LIVES;
-
   colors[ 2 ] = SDL_Color( 0, 255, 0, 255 );
   colors[ 1 ] = SDL_Color( 255, 255, 0, 255 );
   colors[ 0 ] = SDL_Color( 255, 0, 0, 255 );
+
+  reset( );
+
   return true;
 }
 
@@ -40,7 +41,13 @@ void CBarrier::render( ) {
 }
 
 //-----------------
-void CBarrier::addLife( unsigned amount ) {
+void CBarrier::reset( ) {
+  m_cur_lives = MAX_LIVES;
+}
+
+//-----------------
+bool CBarrier::addLife( unsigned amount ) {
   m_cur_lives += amount;
   m_cur_lives = ( m_cur_lives > MAX_LIVES ? MAX_LIVES : m_cur_lives );
+  return m_cur_lives == 0;
 }
