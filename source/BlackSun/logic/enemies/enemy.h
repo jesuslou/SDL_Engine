@@ -19,12 +19,22 @@ public:
 
 protected:
 
-  TPoint2 m_render_offset;
-  TPoint2 m_board_pos;
+  TPoint2   m_render_offset;
+  TPoint2   m_board_pos;
 
-  CTexture m_texture;
+  CTexture  m_texture;
 
-  CBoard  *m_board;
+  CBoard   *m_board;
+
+  float     m_min_vel;
+  float     m_max_vel;
+
+  float     m_acc_elaspsed;
+  float     m_time_between_moves; // deppends on m_min_vel and m_max_vel
+
+  float     m_min_secs_to_spawn;
+  float     m_max_secs_to_spawn;
+
 };
 
 #endif

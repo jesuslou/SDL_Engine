@@ -14,6 +14,8 @@ public:
   void update( float elapsed );
   void render( );
 
+  void reset( );
+
   bool canShoot( ) const { return m_n_bullets > 0; }
 
   void addBullets( int amount );

@@ -40,6 +40,11 @@ bool CBoard::init( int _cells_x, int _cells_y, const char* img_path, const TPoin
 
   m_bullets.init( max_bullets, bullets_offset );
 
+  m_warning_frame.loadFromFile( "data/textures/warning_frame.png" );
+  m_warning_frame.setPosition( m_render_offset );
+  m_warning_frame.setBlendMode( SDL_BlendMode::SDL_BLENDMODE_BLEND );
+  m_warning_frame.setTintColor( SDL_Color( 0, 255, 0, 255 ) );
+
   return true;
 }
 
@@ -58,18 +63,21 @@ void CBoard::destroy( ) {
 
   m_target_cursor.destroy( );
   m_bullets.destroy( );
+  m_warning_frame.destroy( );
 }
 
 
 //-------------------------
 void CBoard::update( float elapsed ) {
-  m_target_cursor.update( elapsed );
 
   for( auto & enemy : m_enemies ) {
     enemy->update( elapsed );
   }
   updateEnemiesInCells( );
 
+  m_target_cursor.update( elapsed );
+  checksIfCursorOverEnemy( );
+  updateDestroyableEnemies( );
 }
 
 //-------------------------
@@ -86,6 +94,10 @@ void CBoard::render( ) {
 
   m_target_cursor.render( );
   m_bullets.render( );
+
+  if( m_partner_board && m_partner_board->getTargetCursor( ).getTargetEnemy( ) ) {
+    m_warning_frame.render( );
+  }
 }
 
 //-------------------------
@@ -100,7 +112,7 @@ void CBoard::reset( ) {
   m_enemies.clear( );
 
   m_target_cursor.setBoardPos( TPoint2( rand( ) % m_cells_x, rand( ) % m_cells_y ) );
-
+  m_bullets.reset( );
 }
 
 
@@ -116,6 +128,7 @@ int CBoard::onShoot( ) {
   TCell * cell = getCell( cursor_pos );
   if( m_partner_board &&  cell->has_enemy ) {
     m_partner_board->m_bullets.addBullets( 1 );
+    m_target_cursor.setTargetEnemy( nullptr );
     destroyEnemy( cursor_pos );
     return 1;
   }
@@ -164,15 +177,20 @@ void CBoard::updateEnemiesInCells( ) {
   for( auto & cell : m_board ) {
     cell.has_enemy = false;
   }
-
-  std::vector<TPoint2> enemies_to_destroy;
   for( auto & enemy : m_enemies ) {
     TPoint2 enemy_pos = enemy->getBoardPos( );
     TCell *cell = getCell( enemy_pos );
     if( cell ) {
       cell->has_enemy = true;
     }
+  }
+}
 
+//-------------------------
+void CBoard::updateDestroyableEnemies( ) {
+  std::vector<TPoint2> enemies_to_destroy;
+  for( auto & enemy : m_enemies ) {
+    TPoint2 enemy_pos = enemy->getBoardPos( );
     if( enemy_pos.y > 5 ) {
       enemies_to_destroy.push_back( enemy_pos );
     }
@@ -183,6 +201,7 @@ void CBoard::updateEnemiesInCells( ) {
   }
 }
 
+
 //-------------------------
 void CBoard::destroyEnemy( TPoint2 pos ) {
   VEnemies::iterator enemy = getEnemyIterator( pos );
@@ -191,4 +210,9 @@ void CBoard::destroyEnemy( TPoint2 pos ) {
     delete ( *enemy );
   }
   m_enemies.erase( enemy );
+}
+
+//-------------------------
+void CBoard::checksIfCursorOverEnemy( ) {
+  m_target_cursor.setTargetEnemy( getEnemy( m_target_cursor.getBoardPos( ) ) );
 }

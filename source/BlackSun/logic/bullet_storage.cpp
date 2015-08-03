@@ -11,8 +11,8 @@ CBulletStorage::CBulletStorage( )
 //-----------------
 bool CBulletStorage::init( int max_bullets, TPoint2 render_offset ) {
   m_max_bullets = max_bullets;
-  m_n_bullets = m_max_bullets;
   m_render_offset = render_offset;
+  reset( );
 
   m_background.loadFromFile( "data/textures/bullet_storage.png" );
   m_background.setPosition( render_offset );
@@ -38,6 +38,11 @@ void CBulletStorage::render( ) {
   for( int i = m_max_bullets - m_n_bullets; i < m_max_bullets; ++i ) {
     m_bullet_textures[ i ].render( );
   }
+}
+
+//-----------------
+void CBulletStorage::reset( ) {
+  m_n_bullets = m_max_bullets;
 }
 
 //-----------------

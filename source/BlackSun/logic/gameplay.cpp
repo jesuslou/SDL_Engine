@@ -86,6 +86,7 @@ void CGameplay::update( float elapsed ) {
 
 //-----------------
 void CGameplay::render( ) {
+  m_enemy_generator.render( );
   m_board_p1.render( );
   m_board_p2.render( );
   m_separator.render( );
@@ -108,7 +109,7 @@ void CGameplay::reset( ) {
 
 //-----------------
 void CGameplay::onBarrierReached( ) {
-  bool finish = m_barrier.addLife( -1 );
+  bool finish = false;// m_barrier.addLife( -1 );
   if( finish ) {
     setGameState( GS_LOSE );
   }

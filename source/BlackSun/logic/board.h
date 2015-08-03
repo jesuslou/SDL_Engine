@@ -36,7 +36,7 @@ public:
   void addEnemy( CEnemy *enemy );
 
   const TPoint2 & getRenderOffset( ) const { return m_render_offset; }
-
+  CTargetCursor & getTargetCursor( ) { return m_target_cursor; }
 private:
   typedef std::vector<TCell> VCells;
   typedef std::vector<CEnemy*> VEnemies;
@@ -54,11 +54,16 @@ private:
 
   CBoard         *m_partner_board;
 
+  CTexture        m_warning_frame;
+
   TCell * getCell( TPoint2 pos );
   CEnemy * getEnemy( TPoint2 pos );
   VEnemies::iterator getEnemyIterator( TPoint2 pos );
   void updateEnemiesInCells( );
+  void updateDestroyableEnemies( );
   void destroyEnemy( TPoint2 pos );
+  void checksIfCursorOverEnemy( );
+
 };
 
 #endif

@@ -29,6 +29,7 @@ public:
   void setWidth( unsigned w ) { m_width = w; }
   void setHeight( unsigned h ) { m_height = h; }
 
+  TPoint2 getPosition( ) const { return m_position; }
   unsigned getAlpha( ) const { return m_alpha; }
   double getAngle( ) const { return m_angle; }
   float getScale( ) const { return m_scale; }

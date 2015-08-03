@@ -8,6 +8,12 @@ CEnemy::CEnemy( )
 : m_render_offset( 0.f, 0.f )
 , m_board_pos( 0.f, 0.f )
 , m_board( nullptr )
+, m_min_vel( 0.1f )
+, m_max_vel( 0.1f )
+, m_acc_elaspsed( 0.f )
+, m_time_between_moves( 0.1f )
+, m_min_secs_to_spawn( 0.f )
+, m_max_secs_to_spawn( 9999.f )
 { }
 
 //-----------------

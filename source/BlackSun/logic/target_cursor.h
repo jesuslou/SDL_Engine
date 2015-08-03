@@ -4,6 +4,8 @@
 #include "render/texture.h"
 #include "control_keys_data.h"
 
+class CEnemy;
+
 class CTargetCursor {
 public:
 
@@ -18,6 +20,9 @@ public:
   void setBoardPos( TPoint2 board_pos );
   TPoint2 getBoardPos( ) const { return m_board_pos; }
 
+  void setTargetEnemy( CEnemy *e );
+  const CEnemy* getTargetEnemy( ) const { return m_target_enemy; }
+
 private:
   CTexture m_texture;
 
@@ -27,17 +32,14 @@ private:
 
   TControlKeys m_keys;
 
-  enum EMovementMode {
-    MM_FREE = 0
-    , MM_FIXED
-  };
-  EMovementMode m_movement_mode;
+  CEnemy      *m_target_enemy;
 
   int acc_frames;
   int n_freezed_frames;
 
   void moveVertical( int n );
   void moveHorizontal( int n );
+
 };
 
 #endif
