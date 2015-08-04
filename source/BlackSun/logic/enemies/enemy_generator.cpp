@@ -58,7 +58,7 @@ void CEnemyGenerator::update( float elapsed ) {
     spawnEnemies( m_board_p2, m_next_enemy_x_p2 );
     int rnd = ( rand( ) % 25 ) + 75;
     float rnd_percentage = static_cast< float >( rnd ) / 100.f;
-    m_time_to_next_enemy_p2 = 1.5f * rnd_percentage;
+    m_time_to_next_enemy_p2 = 2.5f * rnd_percentage;
     m_time_p2 = m_time_to_next_enemy_p2;
     m_next_enemy_x_p2 = rand( ) % 4;
     TPoint2 r_offset = m_board_p2->getRenderOffset( );
