@@ -49,6 +49,9 @@
     <ClInclude Include="fonts\font_manager.h">
       <Filter>fonts</Filter>
     </ClInclude>
+    <ClInclude Include="utils\interpolators.h">
+      <Filter>utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="utils\timer.cpp">

@@ -15,8 +15,17 @@ CInputManager::CInputManager( )
 
 //-------------------------
 void CInputManager::update( float ) {
-  m_old_key_states = m_cur_key_states;
-  m_cur_key_states = SDL_GetKeyboardState( nullptr );
+  int n = 0;
+  if( !m_old_key_states ) {
+    const Uint8* tmp_key_states = SDL_GetKeyboardState( &n );
+    m_cur_key_states = new Uint8[ n ];
+    m_old_key_states = new Uint8[ n ];
+    memcpy( ( void* ) m_cur_key_states, tmp_key_states, sizeof( Uint8 ) * n );
+  } else {
+    const Uint8* tmp_key_states = SDL_GetKeyboardState( &n );
+    memcpy( ( void* ) m_old_key_states, m_cur_key_states, sizeof( Uint8 ) * n );
+    memcpy( ( void* ) m_cur_key_states, tmp_key_states, sizeof( Uint8 ) * n );
+  }
 }
 
 //-------------------------
@@ -44,5 +53,18 @@ bool CInputManager::becomesReleased( EKeys key ) {
     return m_old_key_states[ key ] != 0 && !m_cur_key_states[ key ] == 0;
   } else {
     return m_cur_key_states[ key ] == 0;
+  }
+}
+
+//-------------------------
+void CInputManager::destroy( ) {
+  if( m_old_key_states ) {
+    delete[ ] m_old_key_states;
+    m_old_key_states = nullptr;
+  }
+
+  if( m_cur_key_states ) {
+    delete[ ] m_cur_key_states;
+    m_cur_key_states = nullptr;
   }
 }

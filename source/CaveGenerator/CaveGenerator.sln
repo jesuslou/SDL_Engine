@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SDL_engine", "..\SDL_engine\SDL_engine.vcxproj", "{C518E954-85D5-468A-A943-5E032697675B}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CaveGenerator", "CaveGenerator.vcxproj", "{1B8A9688-63D0-41EB-A2E5-A5C20F250737}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C518E954-85D5-468A-A943-5E032697675B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C518E954-85D5-468A-A943-5E032697675B}.Debug|Win32.Build.0 = Debug|Win32
+		{C518E954-85D5-468A-A943-5E032697675B}.Release|Win32.ActiveCfg = Release|Win32
+		{C518E954-85D5-468A-A943-5E032697675B}.Release|Win32.Build.0 = Release|Win32
+		{1B8A9688-63D0-41EB-A2E5-A5C20F250737}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1B8A9688-63D0-41EB-A2E5-A5C20F250737}.Debug|Win32.Build.0 = Debug|Win32
+		{1B8A9688-63D0-41EB-A2E5-A5C20F250737}.Release|Win32.ActiveCfg = Release|Win32
+		{1B8A9688-63D0-41EB-A2E5-A5C20F250737}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

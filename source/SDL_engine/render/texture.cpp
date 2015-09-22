@@ -110,8 +110,8 @@ void CTexture::render( ) {
   //  renderQuad.h = clip->h;
   //}
 
-  render_quad.w = m_clip.w;
-  render_quad.h = m_clip.h;
+  //render_quad.w = m_clip.w;
+  //render_quad.h = m_clip.h;
 
   SDL_Point pivot_transformed = {
       static_cast<int>( m_pivot.x * static_cast<float>( render_quad.w ) )

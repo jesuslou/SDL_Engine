@@ -88,6 +88,7 @@ void CApplicationBase::destroy( ) {
   // Project specific destruction
   destroyProject( );
 
+  CInputManager::get( ).destroy( );
   CFontManager::get( ).destroy( );
   CRenderer::get( ).destroy( );
 

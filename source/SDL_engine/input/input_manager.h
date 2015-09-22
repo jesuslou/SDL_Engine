@@ -30,6 +30,8 @@ public:
   bool isReleased( EKeys key );
   bool becomesReleased( EKeys key );
 
+  void destroy( );
+
 private:
   CInputManager( );
 
