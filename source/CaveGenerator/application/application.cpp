@@ -30,7 +30,7 @@ static const int X_CELLS = 160; // max 240 // shadows 120
 static const int Y_CELLS = 90; // max 135  // shadows 70
 static const int WIDTH = 8;
 
-static bool use_generator = true;
+static bool use_generator = false;
 
 
 float percentage_of_rocks = 0.6f;
@@ -49,7 +49,7 @@ int margin_y = 1;
 class CCell {
 public:
   CTexture t;
-  //CTexture t_shadow;
+  CTexture t_shadow;
   bool is_rock;
   bool is_wall;
   bool is_stair;
@@ -63,11 +63,11 @@ public:
     t.loadFromFile( "data/textures/blank.png" );
     t.setPosition( TPoint2( x * WIDTH, y * WIDTH ) );
 
-    //t_shadow.loadFromFile( "data/textures/blank.png" );
-    //t_shadow.setPosition( TPoint2( x * WIDTH, y * WIDTH ) );
-    //t_shadow.setBlendMode( SDL_BlendMode::SDL_BLENDMODE_BLEND );
-    //t_shadow.setTintColor( SDL_Color( 0, 0, 0, 255 ) );
-    //t_shadow.setAlpha( 128 );
+    t_shadow.loadFromFile( "data/textures/blank.png" );
+    t_shadow.setPosition( TPoint2( x * WIDTH, y * WIDTH ) );
+    t_shadow.setBlendMode( SDL_BlendMode::SDL_BLENDMODE_BLEND );
+    t_shadow.setTintColor( SDL_Color( 0, 0, 0, 255 ) );
+    t_shadow.setAlpha( 128 );
   }
 
   void turnIntoRock( ) {
@@ -264,18 +264,16 @@ public:
       for( size_t y = 1; y < Y_CELLS - 1; ++y ) {
 
         if( table[ x ][ y ].is_wall ) {
-          if( ( !table[ x - 1 ][ y ].is_rock && !table[ x + 1 ][ y ].is_rock )
-              || ( !table[ x ][ y - 1 ].is_rock && !table[ x ][ y + 1 ].is_rock )
-              //|| ( !table[ x - 1 ][ y - 1 ].is_rock && !table[ x + 1 ][ y + 1 ].is_rock )
-              //|| ( !table[ x + 1 ][ y - 1 ].is_rock && !table[ x - 1 ][ y + 1 ].is_rock )
+          if( ( x - 1 >= 0 && x + 1 < X_CELLS && !table[ x - 1 ][ y ].is_rock && !table[ x + 1 ][ y ].is_rock )
+              || ( y - 1 >= 0 && y + 1 < Y_CELLS && !table[ x ][ y - 1 ].is_rock && !table[ x ][ y + 1 ].is_rock )
               ) {
             table[ x ][ y ].must_convert_into_rock = true;
           }
 
-          if( ( !table[ x - 1 ][ y ].is_rock && table[ x + 1 ][ y ].is_wall && !table[ x + 2 ][ y ].is_rock )
-              || ( !table[ x + 1 ][ y ].is_rock && table[ x - 1 ][ y ].is_wall && !table[ x - 2 ][ y ].is_rock )
-              || ( !table[ x ][ y - 1 ].is_rock && table[ x ][ y + 1 ].is_wall && !table[ x ][ y + 2 ].is_rock )
-              || ( !table[ x ][ y + 1 ].is_rock && table[ x ][ y - 1 ].is_wall && !table[ x ][ y - 2 ].is_rock )
+          if( ( x - 1 >= 0 && x + 1 < X_CELLS && x + 2 < X_CELLS && !table[ x - 1 ][ y ].is_rock && table[ x + 1 ][ y ].is_wall && !table[ x + 2 ][ y ].is_rock )
+              || ( x - 1 >= 0 && x + 1 < X_CELLS && x - 2 >= 0 && !table[ x + 1 ][ y ].is_rock && table[ x - 1 ][ y ].is_wall && !table[ x - 2 ][ y ].is_rock )
+              || ( y - 1 >= 0 && y + 1 < Y_CELLS && y + 2 < Y_CELLS && !table[ x ][ y - 1 ].is_rock && table[ x ][ y + 1 ].is_wall && !table[ x ][ y + 2 ].is_rock )
+              || ( y - 1 >= 0 && y + 1 < Y_CELLS && y - 2 >= 0 && !table[ x ][ y + 1 ].is_rock && table[ x ][ y - 1 ].is_wall && !table[ x ][ y - 2 ].is_rock )
               ) {
             table[ x ][ y ].must_convert_into_rock = true;
           }
@@ -314,7 +312,7 @@ public:
     for( size_t x = 0; x < X_CELLS; ++x ) {
       for( size_t y = 0; y < Y_CELLS; ++y ) {
         table[ x ][ y ].t.render( );
-        //table[ x ][ y ].t_shadow.render( );
+        table[ x ][ y ].t_shadow.render( );
       }
     }
   }
@@ -323,7 +321,7 @@ public:
     for( size_t x = 0; x < X_CELLS; ++x ) {
       for( size_t y = 0; y < Y_CELLS; ++y ) {
         table[ x ][ y ].t.destroy( );
-        //table[ x ][ y ].t_shadow.destroy( );
+        table[ x ][ y ].t_shadow.destroy( );
       }
     }
   }
@@ -418,9 +416,10 @@ void stepTwo( ) {
         }
       }
 
-      if( n_neighbors >= neighborhood_threshold &&  table[ x ][ y ].is_rock ) {
+      if( n_neighbors >= neighborhood_threshold && !table[ x ][ y ].is_rock ) {
         table[ x ][ y ].must_convert_into_rock = true;
-      } else if( n_neighbors < neighborhood_threshold &&  !table[ x ][ y ].is_rock ) {
+      } else if( n_neighbors < neighborhood_threshold && table[ x ][ y ].is_rock ) {
+        table[ x ][ y ].must_convert_into_rock = false;
         table[ x ][ y ].must_convert_into_ground = true;
       }
     }
@@ -431,7 +430,7 @@ void stepTwo( ) {
       CCell & c = table[ x ][ y ];
       if( c.must_convert_into_rock ) {
         c.turnIntoRock( );
-      } else/* if( c.must_convert_into_ground )*/ {
+      } else if( c.must_convert_into_ground ) {
         c.turnIntoGround( );
       }
       c.must_convert_into_rock = false;
@@ -539,49 +538,95 @@ void stepFive( ) {
   stepFour( );
 }
 
+float distance( float x, float y, float ratio ) {
+  return sqrt( ( pow( y * ratio, 2 ) ) + pow( x, 2 ) );
+};
+
+float filled( float x, float y, float radius, float ratio ) {
+  return distance( x, y, ratio ) <= radius;
+};
+
 void placeStairs( unsigned n_stairs ) {
   for( size_t i = 0; i < n_stairs; ++i ) {
 
-    unsigned x = randomRange( 0, X_CELLS );
-    unsigned y = randomRange( 0, Y_CELLS );
+    int x = 0;
+    int y = 0;
 
-    while( maps[ 0 ].table[ x ][ y ].is_rock || maps[ 1 ].table[ x ][ y ].is_rock ) {
+    bool valid = false;
+    do {
       x = randomRange( 0, X_CELLS );
       y = randomRange( 0, Y_CELLS );
-    }
+
+      valid = !maps[ 0 ].table[ x ][ y ].is_rock && !maps[ 0 ].table[ x ][ y ].is_rock;
+      unsigned n_neighbors_1 = 0;
+      unsigned n_neighbors_2 = 0;
+      for( int _x = -1; _x <= 1; ++_x ) {
+        for( int _y = -1; _y <= 1; ++_y ) {
+
+          int n_x = x + _x;
+          int n_y = y + _y;
+
+          if( x == n_x && y == n_y ) {
+            continue;
+          } else if( n_x < 0 || n_y < 0 || n_x >= X_CELLS || n_y >= Y_CELLS ) {
+            ++n_neighbors_1;
+            ++n_neighbors_2;
+            continue;
+          }
+
+          if( maps[ 0 ].table[ n_x ][ n_y ].is_rock || maps[ 0 ].table[ n_x ][ n_y ].is_stair ) {
+            ++n_neighbors_1;
+          }
+          if( maps[ 1 ].table[ n_x ][ n_y ].is_rock || maps[ 1 ].table[ n_x ][ n_y ].is_stair ) {
+            ++n_neighbors_2;
+          }
+        }
+      }
+
+      valid &= n_neighbors_1 == 0 && n_neighbors_2 == 0;
+    } while( !valid );
 
     maps[ 0 ].table[ x ][ y ].turnIntoStairs( );
     maps[ 1 ].table[ x ][ y ].turnIntoStairs( );
 
-    //int light_rad = 5;
-    //float alpha_step = 128 / light_rad;
-    //for( int _x = -light_rad; _x < light_rad; ++_x ) {
-    //  for( int _y = -light_rad; _y < light_rad; ++_y ) {
 
-    //    
-    //    int n_x = x + _x;
-    //    int n_y = y + _y;
 
-    //    if( n_x < 0 || n_y < 0 || n_x >= X_CELLS || n_y >= Y_CELLS ) {
-    //      continue;
-    //    }
+    int light_rad = 25;
+    int width_r = light_rad / 2;
+    int height_r = light_rad / 2;
+    float ratio = width_r / height_r;
 
-    //    float alpha = 256.f;
+    int maxblocks_x = 0;
+    int maxblocks_y = 0;
 
-    //    int step = light_rad - abs( _x );
-    //    step += light_rad - abs( _y );
-    //    alpha -= step * alpha_step;
-    //    //alpha = alpha < 0 ? 0 : alpha;
+    float ifilled = 0;
 
-    //    if( !maps[ 0 ].table[ n_x ][ n_y ].is_rock ) {
-    //      maps[ 0 ].table[ n_x ][ n_y ].t_shadow.setAlpha( alpha );
-    //    }
-    //    if( !maps[ 1 ].table[ n_x ][ n_y ].is_rock ) {
-    //      maps[ 1 ].table[ n_x ][ n_y ].t_shadow.setAlpha( alpha );
-    //    }
-    //  }
-    //}
+    if( ( width_r * 2 ) % 2 == 0 ) {
+      maxblocks_x = ceil( width_r - 0.5f ) * 2 + 1;
+    } else {
+      maxblocks_x = ceil( width_r ) * 2;
+    }
 
+    if( ( height_r * 2 ) % 2 == 0 ) {
+      maxblocks_y = ceil( height_r - .5 ) * 2 + 1;
+    } else {
+      maxblocks_y = ceil( height_r ) * 2;
+    }
+
+    for( int _y = -maxblocks_y / 2 + 1; _y <= maxblocks_y / 2 - 1; _y++ ) {
+      for( int _x = -maxblocks_x / 2 + 1; _x <= maxblocks_x / 2 - 1; _x++ ) {
+        int n_x = x + _x;
+        int n_y = y + _y;
+        if( n_x < 0 || n_y < 0 || n_x >= X_CELLS || n_y >= Y_CELLS ) {
+          continue;
+        }
+
+        if( filled( _x, _y, width_r, ratio ) ) {
+          maps[ 0 ].table[ n_x ][ n_y ].t_shadow.setAlpha( 0 );
+        }
+
+      }
+    }
   }
 }
 
@@ -631,6 +676,36 @@ int n_automatas_generated = 0;
 
 //-----------------
 void CApplication::updateProject( float elapsed ) {
+
+
+  //EMouseButtons test_btn = EMouseButtons::MB_RIGHT;
+  //if( CInputManager::get( ).becomesPressed( test_btn ) ) {
+  //  printf( "Mouse button becomes pressed\n" );
+  //}
+  //if( CInputManager::get( ).isPressed( test_btn ) ) {
+  //  printf( "Mouse button pressed\n" );
+  //}
+  //if( CInputManager::get( ).becomesReleased( test_btn ) ) {
+  //  printf( "Mouse button becomes released\n" );
+  //}
+
+  ////TPoint2 p = CInputManager::get( ).getMousePosition( );
+  ////printf( "Mouse pos %.2f %.2f\n", p.x, p.y );
+
+  //EMouseMovementDir md = CInputManager::get( ).getMouseMovementDir( );
+  //std::string p;
+  //if( md == EMouseMovementDir::MMD_LEFT ) {
+  //  p = "left";
+  //} else if( md == EMouseMovementDir::MMD_RIGHT ) {
+  //  p = "right";
+  //} else if( md == EMouseMovementDir::MMD_DOWN) {
+  //  p = "down";
+  //} else if( md == EMouseMovementDir::MMD_UP) {
+  //  p = "up";
+  //} else {
+  //  p = "none";
+  //}
+  //printf( "Mouse dir %s\n", p.c_str( ) );
 
   if( CInputManager::get( ).becomesPressed( VK_ENTER ) ) {
 

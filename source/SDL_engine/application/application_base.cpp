@@ -18,7 +18,7 @@ CApplicationBase::CApplicationBase( )
 //-------------------------
 bool CApplicationBase::init( const char *app_title, unsigned x_res, unsigned y_res ) {
 
-  srand( time( NULL ) );
+  srand( static_cast<unsigned int>( time( nullptr ) ) );
 
   bool is_ok = CRenderer::get( ).init( app_title, x_res, y_res );
   if( !is_ok ) {
@@ -61,15 +61,19 @@ void CApplicationBase::update( ) {
     CTimer timer;
     timer.start( );
 
+    CInputManager::get( ).setupMouseState( );
+
     //Handle events on queue
     while( SDL_PollEvent( &e ) != 0 ) {
       //User requests quit
       if( e.type == SDL_QUIT ) {
         quit = true;
       }
+
+      CInputManager::get( ).updateMouse( e );
     }
 
-    CInputManager::get( ).update( elapsed );
+    CInputManager::get( ).updateKeyboard( );
 
     updateProject( elapsed );
 
