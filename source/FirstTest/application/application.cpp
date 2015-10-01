@@ -61,13 +61,17 @@ void CApplication::updateProject( float elapsed ) {
   static float max_scale = 1.f;
   static float time = 1.f;
 
+  double rot = img_1.getAngle( );
+  rot += elapsed * 40.f;
+  img_1.setAngle( rot );
+
   t += elapsed;
   EaseInBackInterpolation interpolator;
   float scale = interpolator( min_scale, max_scale, t / time );
   printf( "scale: %f\n", scale );
   img_1.setScale( scale );
 
-  //fonts.printText( CFontManager::FT_GENERAL, "Eh tu, cipote", 20, 200 );
+  fonts.printText( CFontManager::FT_GENERAL, "Eh tu, cipote", 20, 200 );
 }
 
 //-----------------

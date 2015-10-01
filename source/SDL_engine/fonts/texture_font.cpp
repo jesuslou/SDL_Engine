@@ -156,6 +156,7 @@ bool CTextureFont::buildFont( const char* path ) {
 
     m_texture.unlockTexture( );
 
+    m_texture.setBlendMode( SDL_BlendMode::SDL_BLENDMODE_BLEND );
   return true;
 }
 

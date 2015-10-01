@@ -677,36 +677,6 @@ int n_automatas_generated = 0;
 //-----------------
 void CApplication::updateProject( float elapsed ) {
 
-
-  //EMouseButtons test_btn = EMouseButtons::MB_RIGHT;
-  //if( CInputManager::get( ).becomesPressed( test_btn ) ) {
-  //  printf( "Mouse button becomes pressed\n" );
-  //}
-  //if( CInputManager::get( ).isPressed( test_btn ) ) {
-  //  printf( "Mouse button pressed\n" );
-  //}
-  //if( CInputManager::get( ).becomesReleased( test_btn ) ) {
-  //  printf( "Mouse button becomes released\n" );
-  //}
-
-  ////TPoint2 p = CInputManager::get( ).getMousePosition( );
-  ////printf( "Mouse pos %.2f %.2f\n", p.x, p.y );
-
-  //EMouseMovementDir md = CInputManager::get( ).getMouseMovementDir( );
-  //std::string p;
-  //if( md == EMouseMovementDir::MMD_LEFT ) {
-  //  p = "left";
-  //} else if( md == EMouseMovementDir::MMD_RIGHT ) {
-  //  p = "right";
-  //} else if( md == EMouseMovementDir::MMD_DOWN) {
-  //  p = "down";
-  //} else if( md == EMouseMovementDir::MMD_UP) {
-  //  p = "up";
-  //} else {
-  //  p = "none";
-  //}
-  //printf( "Mouse dir %s\n", p.c_str( ) );
-
   if( CInputManager::get( ).becomesPressed( VK_ENTER ) ) {
 
     if( steps == -1 ) {

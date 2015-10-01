@@ -14,7 +14,7 @@ CTexture::CTexture( )
 , m_flip_mode( SDL_FLIP_NONE )
 , m_tint_color( 255, 255, 255, 255 )
 , m_blend_mode( SDL_BLENDMODE_NONE )
-, m_clip( )
+, m_clip( -1.f, -1.f, -1.f, -1.f )
 , m_pixels( nullptr )
 , m_pitch( 0 )
 , m_width( 0 )
@@ -96,26 +96,29 @@ void CTexture::destroy( ) {
 //-----------------
 void CTexture::render( ) {
   //Set rendering space and render to screen
+  float scaled_width = static_cast< float >( m_width ) * m_scale;
+  float scaled_height = static_cast< float >( m_height ) * m_scale;
+
+  TPoint2 position_transformed = m_position;
+  position_transformed.x -= m_pivot.x * scaled_width;
+  position_transformed.y -= m_pivot.y * scaled_height;
+
+
   SDL_Rect render_quad = { 
-      static_cast<int>( m_position.x )
-    , static_cast<int>( m_position.y )
-    , static_cast<int>( static_cast<float>( m_width ) * m_scale )
-    , static_cast<int>( static_cast<float>( m_height ) * m_scale )
+    static_cast<int>( position_transformed.x )
+    , static_cast<int>( position_transformed.y )
+    , static_cast<int>( scaled_width )
+    , static_cast<int>( scaled_height )
   };
 
 
   //Set clip rendering dimensions
-  //if( clip != NULL ) {
-  //  renderQuad.w = clip->w;
-  //  renderQuad.h = clip->h;
-  //}
-
-  //render_quad.w = m_clip.w;
-  //render_quad.h = m_clip.h;
+  render_quad.w = m_clip.w * m_scale;
+  render_quad.h = m_clip.h * m_scale;
 
   SDL_Point pivot_transformed = {
-      static_cast<int>( m_pivot.x * static_cast<float>( render_quad.w ) )
-    , static_cast<int>( m_pivot.y * static_cast<float>( render_quad.h ) )
+    static_cast<int>( m_pivot.x * scaled_width )
+    , static_cast<int>( m_pivot.y * scaled_height )
   };
 
   // Doing some research I've found that this setter functions are quite cheap to call every frame.

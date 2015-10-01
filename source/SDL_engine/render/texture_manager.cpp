@@ -110,8 +110,9 @@ SDL_Texture* CTextureManager::loadEditableTexture( const char* path, unsigned *w
         printf( "CTextureManager::Unable to create blank texture! SDL Error: %s\n", SDL_GetError( ) );
       } else {
         void *pixels = nullptr;
+        int l_pitch = 0;
         //Lock texture for manipulation
-        SDL_LockTexture( new_texture, &formatted_surface->clip_rect, &pixels, pitch );
+        SDL_LockTexture( new_texture, &formatted_surface->clip_rect, &pixels, &l_pitch );
 
         //Copy loaded/formatted surface pixels
         memcpy( pixels, formatted_surface->pixels, formatted_surface->pitch * formatted_surface->h );
@@ -122,6 +123,24 @@ SDL_Texture* CTextureManager::loadEditableTexture( const char* path, unsigned *w
         }
         if( height ) {
           *height = static_cast<unsigned>( loaded_surface->h );
+        }
+        if( pitch ) {
+          *pitch = static_cast<unsigned>( l_pitch );
+        }
+
+        //Get pixel data in editable format
+        Uint32* u32_pixels = ( Uint32* ) pixels;
+        int pixelCount = ( l_pitch / 4 ) * loaded_surface->h;
+
+        //Map colors                
+        Uint32 colorKey = SDL_MapRGB( formatted_surface->format, 0xFF, 0x00, 0xFF );
+        Uint32 transparent = SDL_MapRGBA( formatted_surface->format, 0xFF, 0x00, 0xFF, 0x00 );
+
+        //Color key pixels
+        for( int i = 0; i < pixelCount; ++i ) {
+          if( u32_pixels[ i ] == colorKey ) {
+            u32_pixels[ i ] = transparent;
+          }
         }
 
         //Unlock texture to update
