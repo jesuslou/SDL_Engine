@@ -68,10 +68,9 @@ void CApplication::updateProject( float elapsed ) {
   t += elapsed;
   EaseInBackInterpolation interpolator;
   float scale = interpolator( min_scale, max_scale, t / time );
-  printf( "scale: %f\n", scale );
   img_1.setScale( scale );
 
-  fonts.printText( CFontManager::FT_GENERAL, "Eh tu, cipote", 20, 200 );
+  fonts.printText( CFontManager::FT_GENERAL, 20, 200, "Eh tu, cipote %.2f", scale );
 }
 
 //-----------------

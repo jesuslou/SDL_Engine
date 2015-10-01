@@ -18,7 +18,7 @@ public:
   bool init( );
   void destroy( );
 
-  void printText( EFontType f_type, std::string text, int x, int y, float scale = 1.f );
+  void printText( EFontType f_type, int x, int y, const char *msg, ... );
 
   void render( );
 
@@ -40,6 +40,9 @@ private:
   static const int MAX_BUFFERED_TEXTS = 64;
   typedef std::vector<TBufferedText> VBufferedTexts;
   VBufferedTexts m_buffered_texts;
+
+  void printTextInternal( EFontType f_type, int x, int y, const char *fmt, va_list argp );
+
 };
 
 #define fonts CFontManager::get( ) 

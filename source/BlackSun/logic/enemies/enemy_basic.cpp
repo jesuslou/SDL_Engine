@@ -28,7 +28,7 @@ void CEnemyBasic::update( float elapsed ) {
     move( 1 );
   }
 
-  fonts.printText( CFontManager::FT_GENERAL, std::to_string( m_time_between_moves ), m_texture.getPosition( ).x, m_texture.getPosition( ).y );
+  fonts.printText( CFontManager::FT_GENERAL, m_texture.getPosition( ).x, m_texture.getPosition( ).y, "%f", m_time_between_moves );
 }
 
 //-----------------

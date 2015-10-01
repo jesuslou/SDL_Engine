@@ -75,13 +75,13 @@ void CGameplay::update( float elapsed ) {
 
     m_barrier.update( elapsed );
   } else if( m_game_state == GS_LOSE ) {
-    fonts.printText( CFontManager::FT_GENERAL, "YOU LOSE", 275, 178 );
-    fonts.printText( CFontManager::FT_GENERAL, std::to_string( m_points ), 275, 228 );
+    fonts.printText( CFontManager::FT_GENERAL, 275, 178,"YOU LOSE" );
+    fonts.printText( CFontManager::FT_GENERAL, 275, 228, "%d", m_points );
     if( CInputManager::get( ).isPressed( VK_ENTER ) ) {
       reset( );
     }
   }
-  fonts.printText( CFontManager::FT_GENERAL, std::to_string( m_points ), 475, 0 );
+  fonts.printText( CFontManager::FT_GENERAL, 475, 0, "%d", m_points );
 }
 
 //-----------------
